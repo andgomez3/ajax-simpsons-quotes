@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta
@@ -11,8 +11,7 @@
 		<link rel="icon" type="image/png" href="favicon.png" />
 		<link
 			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-		/>
+			href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"	/>
 		<link
 			rel="stylesheet"
 			href="https://unpkg.com/bulma@0.7.5/css/bulma.min.css"
@@ -29,9 +28,11 @@
 	<body>
 		<section class="section">
 			<div class="container">
-				<h1 class="title">Simpson API</h1>
-
-				<div class="content" id="chuck-norris"></div>
+				<h1><img src = "http://vignette1.wikia.nocookie.net/logopedia/images/c/c0/The_Simpsons_logo_-_Yellow.svg/revision/latest?cb=20160907193322" alt = "Simpsons Quotes">
+				<h1 class="title">Simpson Quotes</h1>
+				<div class="content" id="simpson"></div>
+				
+				<button id="myBtn">New quote</button>
 			</div>
 		</section>
 
@@ -41,6 +42,33 @@
 			integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs="
 			crossorigin="anonymous"
 		></script>
-		<script></script>
+		<script>
+
+   
+    function fetchSimpsonsJSON() {
+      const simpsonId = 1;
+      const url = `https://simpsons-quotes-api.herokuapp.com/quotes`;
+
+      axios.get(url)
+        .then(response => response.data[0]) 
+        .then(simpson => {
+          console.log('data decoded from JSON:', simpson);
+
+       
+          const simpsonHtml = `
+		  <h3><strong>${simpson.character}</strong></h3>
+		  <img src="${simpson.image}" />
+		  <p> <em>${simpson.quote}</em></p>
+          `;
+          document.querySelector('#simpson').innerHTML = simpsonHtml;
+        });
+    }
+
+    fetchSimpsonsJSON();
+	document.getElementById("myBtn").addEventListener("click", function() {
+	fetchSimpsonsJSON();
+	});
+  
+		</script>
 	</body>
 </html>
